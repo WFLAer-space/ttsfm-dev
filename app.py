@@ -9,7 +9,7 @@ import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Tuple, Optional
-from flask import Flask, request, jsonify, send_file, Response, send_from_directory
+from flask import Flask, request, jsonify, send_file, Response, send_from_directory, render_template
 from flask_cors import CORS
 from dotenv import load_dotenv
 from celery.result import AsyncResult
@@ -108,9 +108,9 @@ def add_security_headers(response: Response) -> Response:
     return response
 
 @app.route('/')
-def index() -> Response:
-    """Render the main index page"""
-    return send_from_directory('static', 'index.html')
+def index():
+    """Serve the main web interface"""
+    return render_template('index.html')
 
 @app.route('/static/<path:filename>')
 def serve_static(filename: str) -> Response:
